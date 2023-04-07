@@ -5,7 +5,7 @@ import pytest
 
 @pytest.fixture
 def dummy_club():
-    return conftest.club_mock(data={
+    return conftest.json_clubs_mock(data={
         "clubs": [
             {
                 "name": "dummy_name",
@@ -30,7 +30,7 @@ def test_load_clubs(dummy_club):
 
 @pytest.fixture
 def dummy_competition():
-    return conftest.competition_mock(data={
+    return conftest.json_competition_mock(data={
         "competitions": [
             {
                 "name": "dummy_competition",
