@@ -1,5 +1,7 @@
-import json
 from flask import Flask, render_template, request, redirect, flash, url_for
+from app import utils
+import json
+
 
 CLUB_DB_PATH = "clubs.json"
 COMPETITION_DB_PATH = "competitions.json"
@@ -34,7 +36,12 @@ def showSummary():
 
     for club in clubs:
         if club['email'] == request.form['email']:
-            return render_template('welcome.html', club=club, competitions=competitions)
+            return render_template(
+                'welcome.html',
+                club=club,
+                past_competitions=utils.get_past_competitions(competitions),
+                future_competitions=utils.get_future_competitions(competitions)
+            )
 
     return render_template('index.html')
 
@@ -47,7 +54,12 @@ def book(competition, club):
         return render_template('booking.html', club=foundClub, competition=foundCompetition)
     else:
         flash("Something went wrong-please try again")
-        return render_template('welcome.html', club=club, competitions=competitions)
+        return render_template(
+            'welcome.html',
+            club=club,
+            past_competitions=utils.get_past_competitions(competitions),
+            future_competitions=utils.get_future_competitions(competitions)
+        )
 
 
 @app.route('/purchasePlaces', methods=['POST'])
@@ -62,7 +74,12 @@ def purchasePlaces():
     club['points'] = int(club['points']) - placesRequired
 
     flash('Great-booking complete!')
-    return render_template('welcome.html', club=club, competitions=competitions)
+    return render_template(
+        'welcome.html',
+        club=club,
+        past_competitions=utils.get_past_competitions(competitions),
+        future_competitions=utils.get_future_competitions(competitions)
+    )
 
 
 # TODO: Add route for points display
