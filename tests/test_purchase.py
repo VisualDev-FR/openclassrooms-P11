@@ -4,7 +4,7 @@ import pytest
 
 
 @pytest.fixture
-def clubs_mock():
+def purchase_clubs_mock():
     return patch('app.server.clubs', [
         {
             "name": "club_1",
@@ -15,19 +15,19 @@ def clubs_mock():
 
 
 @pytest.fixture
-def competitions_mock():
+def purchase_competitions_mock():
     return patch('app.server.competitions', [
         {
             "name": "competition1",
-            "date": "2020-03-27 10:00:00",
+            "date": "2099-03-27 10:00:00",
             "numberOfPlaces": "25"
         },
     ])
 
 
-def test_purchase_decrements(client: FlaskClient, competitions_mock: Mock, clubs_mock: Mock):
+def test_purchase_decrements(client: FlaskClient, purchase_competitions_mock: Mock, purchase_clubs_mock: Mock):
 
-    with competitions_mock, clubs_mock:
+    with purchase_competitions_mock, purchase_clubs_mock:
 
         response = client.post(
             "/purchasePlaces",
