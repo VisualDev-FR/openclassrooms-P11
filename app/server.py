@@ -1,15 +1,18 @@
 import json
 from flask import Flask, render_template, request, redirect, flash, url_for
 
+CLUB_DB_PATH = "clubs.json"
+COMPETITION_DB_PATH = "competitions.json"
+
 
 def loadClubs():
-    with open('clubs.json') as c:
+    with open(CLUB_DB_PATH) as c:
         listOfClubs = json.load(c)['clubs']
         return listOfClubs
 
 
 def loadCompetitions():
-    with open('competitions.json') as comps:
+    with open(COMPETITION_DB_PATH) as comps:
         listOfCompetitions = json.load(comps)['competitions']
         return listOfCompetitions
 
@@ -48,7 +51,7 @@ def purchasePlaces():
     competition = [c for c in competitions if c['name'] == request.form['competition']][0]
     club = [c for c in clubs if c['name'] == request.form['club']][0]
     placesRequired = int(request.form['places'])
-    competition['numberOfPlaces'] = int(competition['numberOfPlaces'])-placesRequired
+    competition['numberOfPlaces'] = int(competition['numberOfPlaces']) - placesRequired
     flash('Great-booking complete!')
     return render_template('welcome.html', club=club, competitions=competitions)
 
