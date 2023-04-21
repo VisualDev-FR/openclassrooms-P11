@@ -48,6 +48,7 @@ def showSummary():
 
 @app.route('/book/<competition>/<club>')
 def book(competition, club):
+
     foundClub = [c for c in clubs if c['name'] == club][0]
     foundCompetition = [c for c in competitions if c['name'] == competition][0]
     if foundClub and foundCompetition:
@@ -70,19 +71,21 @@ def purchasePlaces():
 
     placesRequired = int(request.form['places'])
 
-    competition['numberOfPlaces'] = str(int(competition['numberOfPlaces']) - placesRequired)
-    club['points'] = int(club['points']) - placesRequired
+    if placesRequired > 12:
+        placesRequired = 12
+        flash('You cannot book more than 12 places.')
+    else:
+        flash('Great-booking complete!')
 
-    flash('Great-booking complete!')
+    competition['numberOfPlaces'] = str(int(competition['numberOfPlaces']) - placesRequired)
+    club['points'] = str(int(club['points']) - placesRequired)
+
     return render_template(
         'welcome.html',
         club=club,
         past_competitions=utils.get_past_competitions(competitions),
         future_competitions=utils.get_future_competitions(competitions)
     )
-
-
-# TODO: Add route for points display
 
 
 @app.route('/logout')
