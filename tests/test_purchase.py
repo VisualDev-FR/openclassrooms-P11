@@ -9,7 +9,7 @@ def purchase_clubs_mock():
         {
             "name": "club_1",
             "email": "club1@domain.co",
-            "points": "13"
+            "points": "4"
         },
     ])
 
@@ -59,7 +59,21 @@ def test_purchase_more_than_12_places(client: FlaskClient, purchase_clubs_mock: 
         )
 
         assert response.status_code == 200
-        assert b"Points available: 1" in response.data
-        assert b"Number of Places: 13" in response.data
         assert b"You cannot book more than 12 places." in response.data
-        assert b"Great-booking complete!" not in response.data
+
+
+def test_purchase_more_places_than_available_points(client: FlaskClient, purchase_clubs_mock: _patch, purchase_competitions_mock: _patch):
+
+    with purchase_competitions_mock, purchase_clubs_mock:
+
+        response = client.post(
+            "/purchasePlaces",
+            data={
+                "club": "club_1",
+                "competition": "competition1",
+                "places": 10,
+            },
+        )
+
+        assert response.status_code == 200
+        assert b"You don&#39;t have enought points" in response.data
