@@ -101,6 +101,11 @@ def purchasePlaces():
         )
 
 
+@app.route('/clubs')
+def clubs_view():
+    return render_template('clubs.html', clubs=clubs)
+
+
 @app.route('/logout')
 def logout():
     return redirect(url_for('index'))

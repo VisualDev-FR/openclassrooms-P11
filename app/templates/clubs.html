@@ -1,0 +1,14 @@
+<table>
+    <thead>
+        <th>club</th>
+        <th>points</th>
+    </thead>
+    <tbody>
+        {% for club in clubs %}
+            <tr>
+                <td>{{ club['name'] }}</td>
+                <td>{{ club['points'] }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
