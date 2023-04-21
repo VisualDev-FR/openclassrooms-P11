@@ -75,7 +75,5 @@ def test_purchase_more_places_than_available_points(client: FlaskClient, purchas
             },
         )
 
-        print(response.data)
-
         assert response.status_code == 200
         assert b"You don&#39;t have enought points" in response.data
