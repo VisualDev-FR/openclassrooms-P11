@@ -4,11 +4,12 @@
         <th>points</th>
     </thead>
     <tbody>
+        <ul>
         {% for club in clubs %}
-            <tr>
-                <td>{{ club['name'] }}</td>
-                <td>{{ club['points'] }}</td>
-            </tr>
+            <li>
+                {{ club['name'] + " : " + club['points'] + " points" }}
+            </li>
         {% endfor %}
+        </ul>
     </tbody>
 </table>
