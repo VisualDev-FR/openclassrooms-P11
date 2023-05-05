@@ -1,5 +1,4 @@
 from flask.testing import FlaskClient
-# Invalid message: Found duplicate in "env": COMMOPROGRAMFILES
 
 
 def test_ui_prevent_booking_more_than_12_places(client: FlaskClient, variable_clubs_mock, variable_competitions_mock):
