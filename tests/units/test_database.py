@@ -1,54 +1,26 @@
 from app import server
-from tests import conftest
-import pytest
 
 
-@pytest.fixture
-def dummy_club():
-    return conftest.json_clubs_mock(data={
-        "clubs": [
-            {
-                "name": "dummy_name",
-                "email": "dummy@adress.co",
-                "points": "13"
-            },
-        ],
-    })
+def test_load_clubs(clubs_mock_json):
 
-
-def test_load_clubs(dummy_club):
-
-    with dummy_club:
+    with clubs_mock_json:
 
         clubs = server.loadClubs()
 
-        assert len(clubs) == 1
-        assert clubs[0]['name'] == "dummy_name"
-        assert clubs[0]['email'] == "dummy@adress.co"
-        assert int(clubs[0]['points']) == 13
+        assert len(clubs) == 3
+        assert clubs[0]['name'] == "club_1"
+        assert clubs[0]['email'] == "club1@domain.co"
+        assert int(clubs[0]['points']) == 5
 
 
-@pytest.fixture
-def dummy_competition():
-    return conftest.json_competition_mock(data={
-        "competitions": [
-            {
-                "name": "dummy_competition",
-                "date": "2020-03-27 10:00:00",
-                "numberOfPlaces": "25"
-            },
-        ]
-    })
+def test_load_competitions(competitions_mock_json):
 
-
-def test_load_competitions(dummy_competition):
-
-    with dummy_competition:
+    with competitions_mock_json:
 
         competitions = server.loadCompetitions()
 
-        assert len(competitions) == 1
+        assert len(competitions) == 4
 
-        assert competitions[0]['name'] == "dummy_competition"
+        assert competitions[0]['name'] == "past_competition"
         assert competitions[0]['date'] == "2020-03-27 10:00:00"
-        assert int(competitions[0]['numberOfPlaces']) == 25
+        assert int(competitions[0]['numberOfPlaces']) == 5
