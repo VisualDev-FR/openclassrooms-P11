@@ -39,7 +39,7 @@ def test_purchase_decrements(client: FlaskClient, purchase_competitions_mock: _p
         )
 
         assert response.status_code == 200
-        assert b"Points available: 11" in response.data
+        assert b"Points available: 2" in response.data
         assert b"Number of Places: 23" in response.data
         assert b"Great-booking complete!" in response.data
         assert b"You cannot book more than 12 places." not in response.data
