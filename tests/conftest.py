@@ -1,3 +1,6 @@
+from multiprocessing import Process
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from app import server
 from unittest.mock import patch
 import json
@@ -88,3 +91,25 @@ def competitions_mock_json():
 @pytest.fixture
 def client():
     yield server.app.test_client()
+
+
+def run_server():
+    server.app.run()
+
+
+@pytest.fixture
+def base_url():
+    return "http://127.0.0.1:5000"
+
+
+@pytest.fixture
+def driver():
+    p = Process(target=run_server, daemon=True)
+    p.start()
+
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument("--width=1920")
+    options.add_argument("--height=1080")
+    driver = webdriver.Chrome(options=options)
+    return driver
