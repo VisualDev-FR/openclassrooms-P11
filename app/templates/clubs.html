@@ -1,0 +1,15 @@
+<table>
+    <thead>
+        <th>club</th>
+        <th>points</th>
+    </thead>
+    <tbody>
+        <ul>
+        {% for club in clubs %}
+            <li>
+                {{ club['name'] + " : " + club['points'] + " points" }}
+            </li>
+        {% endfor %}
+        </ul>
+    </tbody>
+</table>

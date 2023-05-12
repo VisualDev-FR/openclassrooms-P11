@@ -80,8 +80,8 @@ def purchasePlaces():
     if placesRequired > 12:
         placesRequired = 12
         flash('You cannot book more than 12 places.')
-        return render_template('booking.html', competition=competition_name, club=club_name)      
-    
+        return render_template('booking.html', competition=competition_name, club=club_name)
+
     elif placesRequired > available_points:
         placesRequired = available_points
         flash("You don't have enought points")
@@ -99,6 +99,11 @@ def purchasePlaces():
             past_competitions=utils.get_past_competitions(competitions),
             future_competitions=utils.get_future_competitions(competitions)
         )
+
+
+@app.route('/clubs')
+def clubs_view():
+    return render_template('clubs.html', clubs=clubs)
 
 
 @app.route('/logout')
