@@ -38,3 +38,11 @@ def test_login_with_invalid_credentials(client: FlaskClient, clubs_mock):
 
         assert response.status_code == 200
         assert b"Welcome to the GUDLFT Registration Portal!" in response.data
+
+
+def test_logout(client: FlaskClient):
+
+    response = client.get("/logout", follow_redirects=True)
+
+    assert response.status_code in [200, 302]
+    assert b"Welcome to the GUDLFT Registration Portal!" in response.data    
