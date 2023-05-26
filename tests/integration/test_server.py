@@ -56,3 +56,36 @@ def test_server(client: FlaskClient, clubs_mock, competitions_mock):
         assert b"Welcome to the GUDLFT Registration Portal!" in logout.data
 
 
+def test_clubs_stats_are_correclty_updated(client: FlaskClient, clubs_mock, competitions_mock):
+
+    with clubs_mock, competitions_mock:
+
+        # read stats before purchase
+        stats_before = client.get('/clubs')
+
+        assert stats_before.status_code == 200
+        assert b"club_1 : 5 points" in stats_before.data
+        assert b"club_2 : 15 points" in stats_before.data
+        assert b"club_3 : 20 points" in stats_before.data
+
+        # purchase places
+        purchase = client.post(
+            "/purchasePlaces",
+            data={
+                "club": "club_1",
+                "competition": "future_competition_10_places",
+                "places": 2,
+            }
+        )
+
+        assert purchase.status_code == 200
+        assert b"Points available: 3" in purchase.data
+        assert b"Number of Places: 8" in purchase.data
+
+        # read stats after purchase
+        stats_after = client.get('/clubs')
+
+        assert stats_after.status_code == 200
+        assert b"club_1 : 3 points" in stats_after.data
+        assert b"club_2 : 15 points" in stats_after.data
+        assert b"club_3 : 20 points" in stats_after.data        
