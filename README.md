@@ -59,3 +59,10 @@ pyhon -m pytest
 
 ## Courverture de test :
 
+1. Depuis la racine du projet, lancer :
+
+```
+pytest --cov=.\app --cov-report html
+```
+
+2. Ouvir le fichier ``` .\htmlcov\index.html ``` pour accéder au rapport de couverture
