@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from app import server
 from unittest.mock import patch
+import copy
 import json
 import pytest
 import os
@@ -58,12 +59,12 @@ TEST_COMPETITIONS = {
 
 @pytest.fixture
 def clubs_mock():
-    return patch('app.server.clubs', TEST_CLUBS['clubs'])
+    return patch('app.server.clubs', copy.deepcopy(TEST_CLUBS['clubs']))
 
 
 @pytest.fixture
 def competitions_mock():
-    return patch('app.server.competitions', TEST_COMPETITIONS['competitions'])
+    return patch('app.server.competitions', copy.deepcopy(TEST_COMPETITIONS['competitions']))
 
 
 @pytest.fixture
