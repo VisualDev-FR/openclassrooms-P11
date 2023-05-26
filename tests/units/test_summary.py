@@ -13,6 +13,7 @@ def test_past_competitions_are_not_bookable(client: FlaskClient, clubs_mock, com
         )
 
         assert response.status_code == 200
+        assert bytes(response.data).count(b"Book Places") == 2
         assert b"past_competition" in response.data
         assert b"2020-03-27 10:00:00" in response.data
         assert b"Number of Places: 5" not in response.data
